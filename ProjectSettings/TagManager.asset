@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Light
+  - Collectible
+  - Plateform
+  - Props
+  - Vide
+  - UI
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Fond
+    uniqueID: 778059147
+    locked: 0
+  - name: Plateform
+    uniqueID: 3742302393
+    locked: 0
+  - name: Props
+    uniqueID: 3935350979
+    locked: 0
+  - name: Collectibles
+    uniqueID: 2975209853
+    locked: 0
+  - name: Player
+    uniqueID: 2434882311
+    locked: 0
