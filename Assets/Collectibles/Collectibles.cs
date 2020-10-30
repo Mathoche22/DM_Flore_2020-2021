@@ -35,7 +35,7 @@ public class Collectibles : MonoBehaviour
         if (other.gameObject.CompareTag("Collectible"))
         {
             Destroy(other.gameObject) ;
-            ScoreValue += 1 ;
+            ScoreValue ++ ;
         }
     }
 }
