@@ -7,7 +7,7 @@ public class Collectibles : MonoBehaviour
 {
     // variables
     //score apearing in the inspector
-    [SerializeField] private Text Score ;
+    [SerializeField] private text Score ;
     private int scoreValue ;
 
 

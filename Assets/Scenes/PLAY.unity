@@ -657,7 +657,7 @@ MonoBehaviour:
   speed: 50
   maxSpeed: 100
   JumpForce: 5
-  gameOverCanvas: {fileID: 0}
+  gameOverCanvas: {fileID: 651678821}
 --- !u!58 &333883605
 CircleCollider2D:
   m_ObjectHideFlags: 0
