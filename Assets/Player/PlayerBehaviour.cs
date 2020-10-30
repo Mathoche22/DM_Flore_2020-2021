@@ -8,19 +8,19 @@ using UnityEngine.SceneManagement;
 public class PlayerBehaviour : MonoBehaviour
 {
 
-    // variables 
-
-    private PlayerMove PlayerMove;
-    private Vector2 direction;
-
-    private Rigidbody2D myRB;
-    private Animator MyAnim;
-    private SpriteRenderer MySprite;
-
-    [SerializeField] private float speed; 
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float JumpForce; 
+    // instantiate variables 
     
+    [SerializeField] private float speed; // to act on the speed from the inspector
+    [SerializeField] private float maxSpeed;// to act on the maximum speed from the inspector
+    [SerializeField] private float JumpForce; // to act on the jump force
+    
+    private bool isOnGround = false; // to act on the fox's physics
+
+    private PlayerMove PlayerMove; // to act on the fox's input actions
+    private Vector2 direction; // to act the fox's direction
+    private Rigidbody2D myRB; // modify fox's physics
+    private Animator MyAnim; // act on the animations
+    private SpriteRenderer MySprite; // act on the sprite
 
     [SerializeField] private GameObject gameOverCanvas; 
 
@@ -28,9 +28,11 @@ public class PlayerBehaviour : MonoBehaviour
     private void OnEnable()
     {
         //Input system instantiate 
-        PlayerMove = new PlayerMove();
+        var PlayerMove = new PlayerMove();
 
+        // set input action 
         PlayerMove.Enable();
+
         // call the fonction when Move inputs are engaged
         PlayerMove.Main.Move.performed += OnMovePerformed; 
 
@@ -38,7 +40,12 @@ public class PlayerBehaviour : MonoBehaviour
         PlayerMove.Main.Move.canceled += OnMoveCanceled; 
 
         // call the fonction when Jump inputs are engaged
-        //PlayerMove.Main.Jump.performed += OnJumpPerformed; 
+        PlayerMove.Main.Jump.performed += OnJumpPerformed; 
+    }
+
+
+    private void Start()
+    {
 
         // call the player's rigidbody to act on it
         myRB = GetComponent<Rigidbody2D>(); 
@@ -48,7 +55,64 @@ public class PlayerBehaviour : MonoBehaviour
 
         // call the renderer to act on it
         MySprite = GetComponent<SpriteRenderer>();
+    }
 
+
+    void FixedUpdate()
+    {
+        //the player move only on the X axis
+        var playerDirection = new Vector2(direction.x, 0);
+
+        // As long as the player don't go as fast as maxSpeed, add a force
+        if(myRB.velocity.sqrMagnitude < maxSpeed)
+        {
+            myRB.AddForce(playerDirection * speed);
+        }
+        
+        // play the running anim as long as the player is doing it
+        var isRunning = playerDirection.x != 0 ;
+        MyAnim.SetBool("isRunning", isRunning);
+
+        // flip the sprite (when the player goes to the left, he look to the left ...)
+        if (direction.x <0)
+        {
+            MySprite.flipX = true;            
+        }
+        else if (direction.x > 0)
+        {
+            MySprite.flipX = false ;
+        }
+    
+        // play the jumping anim when the fox's position on y is more than 0
+        var isAscending = !isOnGround && myRB.velocity.y > 0;
+        MyAnim.SetBool("isJumping", isAscending);
+
+        //play the falling anim when the fox's position on y is less than 0
+        var isDescending = !isOnGround && myRB.velocity.y < 0;
+        MyAnim.SetBool("isFalling", isDescending);
+
+        //play the idle anim when the fox is on the ground
+        MyAnim.SetBool("isGrounded", isOnGround);        
+    }
+
+
+    // call the fonction to engage the movement of the player
+    private void OnMovePerformed(InputAction.CallbackContext obj)
+    {
+        // Get the position of the engaged inputs    
+        direction = obj.ReadValue<Vector2>() ;
+    }
+
+
+    // call the fonction to engage the jump of the player
+    private void OnJumpPerformed(InputAction.CallbackContext obj)
+    {
+        // if the player is on the ground, add up force
+        if(isOnGround)
+        {
+            myRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+            isOnGround = false;
+        } 
     }
 
 
@@ -59,84 +123,14 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
 
-    // call the fonction to engage the movement of the player
-    private void OnMovePerformed(InputAction.CallbackContext obj)
-    {
-        // Get the position of the engaged inputs        
-        direction = obj.ReadValue<Vector2>() ;
-        Debug.Log(direction) ;
-    }
-
-    private void Start()
-    {
-        MyAnim.SetBool("isRunning", false);
-        MyAnim.SetBool("isJumping", false);
-        MyAnim.SetBool("isFalling", false);
-
-    }
-
-    // call the fonction to engage the jump of the player
-    /*private void OnJumpPerformed(InputAction.CallbackContext obj)
-    {
-        // if the player is on the ground, add up force
-        if(IsOnGround)
-        {
-            myRB.AddForce(Vector2.up *JumpForce, ForceMode2D.Impulse) ;
-            // stop to ad force once input are not engaged
-            
-        } 
-    }
-
-    void FixedUpdate()
-    {
-        //the player move only on the X axis
-        direction.y = 0;
-
-        // As logn as the player don't go as fast as maxSpeed, add a force
-        if(myRB.velocity.sqrMagnitude < maxSpeed)
-        {
-            myRB.AddForce(direction * speed);
-        }
-        
-        // call the running animation of the player
-        var isRunning = direction.x != 0 ;
-        // play the running anim as long as the player is doing it
-        MyAnim.SetBool("isRunning", isRunning);
-
-        // direction.x = 0;
-        if(myRB.velocity.sqrMagnitude < JumpForce)
-        {
-            myRB.AddForce(direction * JumpForce);
-        }
-        
-        // call the jumping animation of the player
-        var isJumping = direction.y != 0;
-        // play the jumping anim as long as the player is doing it
-        MyAnim.SetBool("isJumping", isJumping);
-        
-        // flip the sprite (when the player goes to the left, he look to the left ...)
-        if (direction.x <0)
-        {
-            MySprite.flipX = true;            
-        }
-        else if (direction.x > 0)
-        {
-            MySprite.flipX = false ;
-        }
-        
-    }
-    
-    
     // call the fonction to detect other objects
     private void OnCollisionEnter2D(Collision2D other)
     {
-        // if the player enter in collision with an object, then he can jump
-        if (other.gameObject.CompareTag("Collectible"))
+        if(other.gameObject.CompareTag("Ground"))
         {
-            Destroy(other.gameObject);
+            isOnGround = true;
         }
-
-        if (other.gameObject.CompareTag("vide"))
+        if(other.gameObject.CompareTag("vide"))
         {
             GameOver() ;
             // Debug.Log("t'es mouru") ;
@@ -149,8 +143,5 @@ public class PlayerBehaviour : MonoBehaviour
         Destroy(gameObject) ;
         SceneManager.LoadScene("MENU") ;
     }
-    */
-
-  
     
 }

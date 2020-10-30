@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Collectibles : MonoBehaviour
 {
-    // variables
     //score apearing in the inspector
-    [SerializeField] private Text Score ;
-    private int scoreValue ;
+    [SerializeField] private TextMeshProUGUI Score ;
+    // int to code the result of the score
+    private int ScoreValue;
 
 
-    // Start is called before the first frame update
     void Start()
     {
-        // at the beggining the score is 0
-        scoreValue = 0 ;
+        // at the lounch the score is 0
+        ScoreValue = 0 ;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         // apearing score and its value on the sreen
-        Score.text = "Score : " + scoreValue ;
+        Score.text = "Score : " + ScoreValue ;
 
     }
 
@@ -31,11 +31,11 @@ public class Collectibles : MonoBehaviour
     {
         // message in the console
         Debug.Log("+1") ;
-        //
+        //when the fox collides with a collectible, they're destroyed and +1 to the score
         if (other.gameObject.CompareTag("Collectible"))
         {
             Destroy(other.gameObject) ;
-            //scoreValue += 1 ;
+            ScoreValue ++ ;
         }
     }
 }
