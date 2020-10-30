@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96c5c35a0264b08af4ae6f13aac905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: {fileID: 0}
+  Score: {fileID: 1014964920}
 --- !u!95 &323205688
 Animator:
   serializedVersion: 3
@@ -654,10 +654,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b39f0d6738a3448796e6cc95241b694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverCanvas: {fileID: 996766666}
   speed: 20
   maxSpeed: 40
   JumpForce: 10
-  gameOverCanvas: {fileID: 651678821}
 --- !u!58 &333883605
 CircleCollider2D:
   m_ObjectHideFlags: 0

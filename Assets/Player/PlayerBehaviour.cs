@@ -10,10 +10,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     // instantiate variables 
     
+    [SerializeField] private GameObject gameOverCanvas; 
     [SerializeField] private float speed; // to act on the speed from the inspector
     [SerializeField] private float maxSpeed;// to act on the maximum speed from the inspector
     [SerializeField] private float JumpForce; // to act on the jump force
-    
+
     private bool isOnGround = false; // to act on the fox's physics
 
     private PlayerMove PlayerMove; // to act on the fox's input actions
@@ -22,7 +23,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Animator MyAnim; // act on the animations
     private SpriteRenderer MySprite; // act on the sprite
 
-    [SerializeField] private GameObject gameOverCanvas; 
+    
 
 
     private void OnEnable()
