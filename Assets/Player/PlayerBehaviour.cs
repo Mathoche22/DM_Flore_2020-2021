@@ -12,8 +12,8 @@ public class PlayerBehaviour : MonoBehaviour
     
     [SerializeField] private float speed; // to act on the speed from the inspector
     [SerializeField] private float maxSpeed;// to act on the maximum speed from the inspector
+    [SerializeField] private float JumpForce; // to act on the jump force
     
-    private float JumpForce; // to act on the jump force
     private bool isOnGround = false; // to act on the fox's physics
 
     private PlayerMove PlayerMove; // to act on the fox's input actions
@@ -110,7 +110,7 @@ public class PlayerBehaviour : MonoBehaviour
         // if the player is on the ground, add up force
         if(isOnGround)
         {
-            myRB.AddForce(Vector2.up *JumpForce, ForceMode2D.Impulse);
+            myRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
             isOnGround = false;
         } 
     }

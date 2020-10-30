@@ -9,7 +9,7 @@ public class Collectibles : MonoBehaviour
     //score apearing in the inspector
     [SerializeField] private TextMeshProUGUI Score ;
     // int to code the result of the score
-    private int ScoreValue ;
+    private int ScoreValue;
 
 
     void Start()
