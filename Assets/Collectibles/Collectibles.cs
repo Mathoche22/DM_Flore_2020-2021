@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class Collectibles : MonoBehaviour
 {
     // variables
     //score apearing in the inspector
-    [SerializeField] private text Score ;
+    [SerializeField] private TextMeshProUGUI Score ;
     private int scoreValue ;
 
 
