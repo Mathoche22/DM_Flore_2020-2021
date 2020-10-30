@@ -142,7 +142,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void GameOver()
     {
         Destroy(gameObject) ;
-        SceneManager.LoadScene("MENU") ;
+        SceneManager.LoadScene("SampleScene");
     }
     
 }
